@@ -20,13 +20,13 @@ function Grid() {
 
   async function findPath(start, end) {
     try {
-      const response = await axios.post("/find-path", {
+      const response = await axios.post("http://localhost:8080/find-path", {
         start: { x: start % 20, y: Math.floor(start / 20) },
         end: { x: end % 20, y: Math.floor(end / 20) },
       });
 
       console.log(response.data);
-      // Set the path using the response
+      // TODO: Set the path using the response
     } catch (err) {
       console.error("Error finding path:", err);
     }
