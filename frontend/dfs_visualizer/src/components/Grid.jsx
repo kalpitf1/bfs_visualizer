@@ -6,38 +6,57 @@ function Grid() {
   const [startPosition, setStartPosition] = useState(null);
   const [endPosition, setEndPosition] = useState(null);
   const [selectingStart, setSelectingStart] = useState(true);
+  const [path, setPath] = useState([]);
 
   async function handleClick(i) {
     if (selectingStart) {
+      setPath([]);
       setStartPosition(i);
       setSelectingStart(false);
     } else if (i !== startPosition) {
       setEndPosition(i);
       setSelectingStart(true);
-      await findPath(startPosition, endPosition);
+      // console.log("inside handleClick: ", startPosition, endPosition); // endPosition does not get set in time here
+      const newStart = startPosition;
+      const newEnd = i;
+      await findPath(newStart, newEnd);
     }
   }
 
   async function findPath(start, end) {
+    const data = {
+      start: { y: start % 20, x: Math.floor(start / 20) },
+      end: { y: end % 20, x: Math.floor(end / 20) },
+    };
     try {
-      const response = await axios.post("http://localhost:8080/find-path", {
-        start: { y: start % 20, x: Math.floor(start / 20) },
-        end: { y: end % 20, x: Math.floor(end / 20) },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/find-path",
+        data
+      );
 
       console.log(response.data);
-      // TODO: Set the path using the response
+      setPath(response.data.path);
     } catch (err) {
       console.error("Error finding path:", err);
     }
   }
 
+  function isInPath(x, y) {
+    if (path.find((point) => point.x === x && point.y === y)) {
+      return true;
+    }
+    return false;
+  }
+
   function renderSquare(i) {
+    const x = Math.floor(i / 20);
+    const y = i % 20;
     return (
       <Square
         key={i}
         isStart={i === startPosition}
         isEnd={i === endPosition}
+        isPath={isInPath(x, y)}
         onClick={() => handleClick(i)}
       />
     );

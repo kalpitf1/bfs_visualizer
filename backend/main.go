@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -48,9 +49,9 @@ func findPathHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
+	fmt.Println("req: ", req.Start, req.End)
 	path := findPath(req.Start, req.End)
-
+	fmt.Println("path: ", path)
 	response := PathResponse{Path: path}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
