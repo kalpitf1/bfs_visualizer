@@ -1,4 +1,4 @@
-function Square({ isStart, isEnd, isPath, onClick }) {
+function Square({ isStart, isEnd, isPath, isObstacle, onClick }) {
   return (
     <button
       onClick={onClick}
@@ -6,7 +6,7 @@ function Square({ isStart, isEnd, isPath, onClick }) {
         width: "30px",
         height: "30px",
         border: "1px solid black",
-        backgroundColor: isPath ? "green" : "white",
+        backgroundColor: isPath ? "green" : isObstacle ? "gray" : "white",
         float: "left",
       }}
     >

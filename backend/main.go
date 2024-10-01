@@ -16,8 +16,9 @@ type Point struct {
 }
 
 type PathRequest struct {
-	Start Point `json:"start"`
-	End   Point `json:"end"`
+	Start     Point   `json:"start"`
+	End       Point   `json:"end"`
+	Obstacles []Point `json:"obstacles"`
 }
 
 type PathResponse struct {
@@ -49,15 +50,15 @@ func findPathHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	fmt.Println("req: ", req.Start, req.End)
-	path := findPath(req.Start, req.End)
+	fmt.Println("req: ", req.Start, req.End, req.Obstacles)
+	path := findPath(req.Start, req.End, req.Obstacles)
 	fmt.Println("path: ", path)
 	response := PathResponse{Path: path}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
 
-func findPath(start, end Point) []Point {
+func findPath(start Point, end Point, obstacles []Point) []Point {
 	queue := []Point{start}
 	visited := make([][]bool, gridSize)
 	for i := range visited {
@@ -79,7 +80,7 @@ func findPath(start, end Point) []Point {
 
 		for _, dir := range directions {
 			next := Point{X: current.X + dir.X, Y: current.Y + dir.Y}
-			if isValid(next) && !visited[next.X][next.Y] {
+			if isValid(next, &obstacles) && !visited[next.X][next.Y] {
 				queue = append(queue, next)
 				visited[next.X][next.Y] = true
 				parent[next] = current
@@ -90,8 +91,15 @@ func findPath(start, end Point) []Point {
 	return nil // No path found
 }
 
-func isValid(p Point) bool {
-	return p.X >= 0 && p.X < gridSize && p.Y >= 0 && p.Y < gridSize
+func isValid(p Point, obstacles *[]Point) bool {
+	isPAnObstacle := false
+	for _, a := range *obstacles {
+		if a == p {
+			isPAnObstacle = true
+			break
+		}
+	}
+	return !isPAnObstacle && p.X >= 0 && p.X < gridSize && p.Y >= 0 && p.Y < gridSize
 }
 
 func reconstructPath(parent map[Point]Point, start Point, end Point) []Point {
