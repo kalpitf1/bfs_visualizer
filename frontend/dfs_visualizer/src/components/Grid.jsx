@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import Square from "./Square";
 
 function Grid() {
@@ -6,13 +7,28 @@ function Grid() {
   const [endPosition, setEndPosition] = useState(null);
   const [selectingStart, setSelectingStart] = useState(true);
 
-  function handleClick(i) {
+  async function handleClick(i) {
     if (selectingStart) {
       setStartPosition(i);
       setSelectingStart(false);
     } else if (i !== startPosition) {
       setEndPosition(i);
       setSelectingStart(true);
+      await findPath(startPosition, endPosition);
+    }
+  }
+
+  async function findPath(start, end) {
+    try {
+      const response = await axios.post("/find-path", {
+        start: { x: start % 20, y: Math.floor(start / 20) },
+        end: { x: end % 20, y: Math.floor(end / 20) },
+      });
+
+      console.log(response.data);
+      // Set the path using the response
+    } catch (err) {
+      console.error("Error finding path:", err);
     }
   }
 
