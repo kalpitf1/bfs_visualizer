@@ -1,4 +1,4 @@
-# Full Stack DFS Visualizer - Go, React
+# Full Stack BFS Visualizer - Go, React
 
 ## Instructions to run locally
 
@@ -14,6 +14,6 @@ For the client,
 - `npm install`
 - `npm start`
 
-Navigate to `http://localhost:5173/` to interact with the grid matrix and observe the shortest path between the start and the end points.
+Navigate to `http://localhost:5173/` to interact with the grid matrix and observe the shortest path between the start and the end points calculated using the Breadth-first Search (BFS) algorithm.
 
-!["DFS Visualizer demo GIF"](dfs-demo.gif)
+!["BFS Visualizer demo GIF"](bfs-demo.gif)
