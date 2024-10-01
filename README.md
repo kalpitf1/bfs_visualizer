@@ -15,3 +15,5 @@ For the client,
 - `npm start`
 
 Navigate to `http://localhost:5173/` to interact with the grid matrix and observe the shortest path between the start and the end points.
+
+!["DFS Visualizer demo GIF"](dfs-demo.gif)
