@@ -33,7 +33,7 @@ func main() {
 
 	// Apply CORS headers to the router
 	cors := handlers.CORS(
-		handlers.AllowedOrigins([]string{"https://bfsvis.netlify.app/"}), // Allow requests from your React app
+		handlers.AllowedOrigins([]string{"https://bfsvis.netlify.app"}), // Allow requests from your React app
 		handlers.AllowedMethods([]string{"POST", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type"}),
 	)
@@ -43,7 +43,7 @@ func main() {
 
 func findPathHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "https://bfsvis.netlify.app/")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 
 	var req PathRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
