@@ -33,7 +33,7 @@ func main() {
 
 	// Apply CORS headers to the router
 	cors := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}), // Allow requests from your React app
+		handlers.AllowedOrigins([]string{"https://bfsvis.netlify.app/"}), // Allow requests from your React app
 		handlers.AllowedMethods([]string{"POST"}),
 		handlers.AllowedHeaders([]string{"Content-Type"}),
 	)
