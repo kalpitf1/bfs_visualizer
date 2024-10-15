@@ -53,7 +53,7 @@ function Grid() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/find-path",
+        "https://bfs-visualizer-u2rl.onrender.com/find-path",
         data
       );
 
