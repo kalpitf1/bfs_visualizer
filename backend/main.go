@@ -29,12 +29,12 @@ const gridSize = 20
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/find-path", findPathHandler).Methods("POST")
+	r.HandleFunc("/find-path", findPathHandler).Methods("POST", "OPTIONS")
 
 	// Apply CORS headers to the router
 	cors := handlers.CORS(
 		handlers.AllowedOrigins([]string{"https://bfsvis.netlify.app/"}), // Allow requests from your React app
-		handlers.AllowedMethods([]string{"POST"}),
+		handlers.AllowedMethods([]string{"POST", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Content-Type"}),
 	)
 
