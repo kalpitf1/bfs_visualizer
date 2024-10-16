@@ -1,5 +1,7 @@
 # Full Stack BFS Visualizer - Go, React
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/30edb134-a713-45e0-9bb8-8b55c93cbb79/deploy-status)](https://app.netlify.com/sites/bfsvis/deploys)
+
 ## Instructions to run locally
 
 For the server,
